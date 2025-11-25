@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Premier Films — Clientes | Caja</title>
+
+  <link rel="stylesheet" href="css/Styles.css">
+      <style>
+    @media (max-width: 980px){ .pos-wrap{grid-template-columns:1fr} }
+.pos-wrap{display:grid;grid-template-columns:280px 1fr;gap:18px;max-width:1200px;margin:18px auto;padding:0 12px}
+.pos-wrap .pos-side{background:#0b1323;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px;position:sticky;top:18px;height:fit-content}
+.pos-wrap .side-brand{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.pos-wrap .side-brand .app-ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#111a2e}
+.pos-wrap .side-nav .item{display:block;padding:12px 12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:8px;color:#e5e7eb}
+.pos-wrap .side-nav .item.active{background:linear-gradient(180deg,#0f1a30,#0c1426);border-color:rgba(255,255,255,.12)}
+.pos-wrap .side-card{margin:12px 0;padding:12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:#0f172a}
+.pos-wrap .side-card .k{color:#94a3b8}
+.pos-wrap .side-card .v{font-size:20px;font-weight:800;margin:4px 0}
+.pos-wrap .side-card .mini{color:#aab4c4}
+.pos-wrap .item.light{display:block;margin-top:8px;color:#cbd5e1}
+
+.pos-wrap .pos-main .toolbar{display:flex;gap:8px;margin-bottom:12px}
+.pos-wrap .input{background:#0f172a;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;color:#e5e7eb;outline:none}
+.pos-wrap .btn{background:#22c55e;border:0;color:#04121a;padding:10px 14px;border-radius:10px;font-weight:800}
+.pos-wrap .btn-ghost{background:#0f172a;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;color:#e5e7eb}
+
+.pos-wrap .panel{background:#0b1323;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px}
+.pos-wrap .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pos-wrap .chips .chip{background:#0f172a;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px 10px;margin-right:6px;color:#cbd5e1}
+.pos-wrap .chip.ok{border-color:rgba(16,185,129,.4);color:#93e0c2}
+
+.pos-wrap .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+.pos-wrap .table thead th{color:#93a4bd;font-weight:600;text-align:left;padding:6px 10px}
+.pos-wrap .table tbody tr{background:#0f172a;border:1px solid rgba(255,255,255,.06)}
+.pos-wrap .table tbody td{padding:10px}
+.pos-wrap .table tbody td.a{white-space:nowrap}
+.pos-wrap .badge{padding:4px 8px;border-radius:999px;font-size:12px}
+.pos-wrap .badge.vip{background:rgba(147,197,253,.12);color:#93c5fd}
+
+.pos-wrap .dlg::backdrop{background:rgba(0,0,0,.45)}
+.pos-wrap .dlg-card{background:#0b1323;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:16px;min-width:320px}
+.pos-wrap .field{display:flex;flex-direction:column;margin-bottom:8px}
+.pos-wrap .field input{background:#0f172a;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;color:#e5e7eb}
+.pos-wrap .check{display:flex;gap:8px;align-items:center;margin:10px 0}
+.pos-wrap .dlg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="logo"></span>
+        <div>Premier Films<br><small>Clientes</small></div>
+      </a>
+      <div style="flex:1"></div>
+      <div class="nav-actions">
+        <div id="posUser" class="user-pill">Cajero</div>
+        <!-- en la NAVBAR -->
+      <button id="navLogout" class="btn-ghost" type="button">Cerrar Sesión</button>
+    </div>
+    </div>
+  </header>
+
+  <main class="pos-wrap">
+    <aside class="pos-side">
+      <div class="side-brand">
+        <div class="app-ico">👤</div>
+        <div><b>Premier Films</b><small>Punto de Venta</small></div>
+      </div>
+      <nav class="side-nav">
+        <a class="item" href="pos.html">Punto de Venta</a>
+        <a class="item" href="reservas-cajero.html">Reservas</a>
+        <a class="item active" href="clientes-cajero.html">Clientes</a>
+      </nav>
+
+      <div class="side-card">
+        <div class="k">Ventas de Hoy</div>
+        <div class="v" id="mSales">$0.00</div>
+        <div class="mini"><b id="mTickets">0</b> boletos · Promedio <span id="mAvg">$0.00</span></div>
+      </div>
+
+      <a class="item light" id="logoutLink">↩ Cerrar Sesión</a>
+    </aside>
+
+    <section class="pos-main">
+      <div class="toolbar">
+        <input id="q" class="input" placeholder="Buscar por nombre o correo…">
+        <select id="fTier" class="input">
+          <option value="ALL">Todos</option>
+          <option value="VIP">VIP</option>
+          <option value="REGULAR">Regulares</option>
+        </select>
+        <button id="btnNew" class="btn">+ Nuevo Cliente</button>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h3>Base de Clientes</h3>
+          <div class="chips">
+            <span class="chip">Total: <b id="cTotal">0</b></span>
+            <span class="chip ok">VIP: <b id="cVip">0</b></span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Email</th>
+                <th>Puntos</th>
+                <th>Última visita</th>
+                <th>Nivel</th>
+                <th class="a">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="rows"><!-- JS --></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Modal mínimo -->
+  <dialog id="dlg" class="dlg">
+    <form method="dialog" class="dlg-card" id="formNew">
+      <h3>Nuevo Cliente</h3>
+      <label class="field"><span>Nombre</span><input required id="nName"></label>
+      <label class="field"><span>Email</span><input type="email" required id="nEmail"></label>
+      <label class="check"><input type="checkbox" id="nVip"> Registrar como VIP</label>
+      <div class="dlg-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn" id="btnSave" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+<script>// ---------- Guard + logout ----------
+document.addEventListener('DOMContentLoaded', () => {
+  const AK = window.AdminKit || {};
+  const me = (AK.guard ? AK.guard({ roles:['cashier','admin'] }) : null);
+  if (!me && !AK.guard) {
+    const u = JSON.parse(sessionStorage.getItem('pf_user')||localStorage.getItem('pf_user')||'null');
+    if (!u || !['cashier','admin'].includes(u.role)) { location.href='auth.html'; return; }
+  }
+  (AK.mountUserBadge ? AK.mountUserBadge : (sel)=>{ const el=document.querySelector(sel); const s=JSON.parse(sessionStorage.getItem('pf_user')||localStorage.getItem('pf_user')); if(el) el.textContent=`${s?.name||'Cajero'} · ${s?.email||''}`;})('#posUser');
+  (AK.wireLogout ? AK.wireLogout : (sels)=>{
+    ([...new Set([].concat(sels))]).forEach(s=>document.querySelectorAll(s).forEach(b=>{
+      if(b.tagName==='BUTTON'&&!b.type){b.type='button'}
+      b.addEventListener('click',()=>{localStorage.removeItem('pf_user');sessionStorage.removeItem('pf_user');location.href='auth.html';});
+    }))
+  })(['#navLogout','#logoutLink']);
+});
+
+// ---------- Datos mock ----------
+let CLIENTES = [
+  { id:'c1', name:'Juan Pérez',    email:'juan@mail.com',   points:1200, last:'2025-08-22', tier:'VIP' },
+  { id:'c2', name:'María García',  email:'maria@mail.com',  points:350,  last:'2025-08-20', tier:'REGULAR' },
+  { id:'c3', name:'Carlos Ruiz',   email:'carlos@mail.com', points:820,  last:'2025-08-17', tier:'VIP' },
+];
+
+const $=(s,sc=document)=>sc.querySelector(s);
+const $$=(s,sc=document)=>[...sc.querySelectorAll(s)];
+const fmtDate = d => new Date(d).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
+
+// ---------- Render ----------
+function row(c){
+  return `<tr data-id="${c.id}">
+    <td>${c.name}</td>
+    <td>${c.email}</td>
+    <td>${c.points}</td>
+    <td>${fmtDate(c.last)}</td>
+    <td>${c.tier==='VIP'?'<span class="badge vip">VIP</span>':'Regular'}</td>
+    <td class="a">
+      <button class="btn-ghost" data-points="${c.id}">+100 pts</button>
+      <button class="btn" data-togglevip="${c.id}">${c.tier==='VIP'?'Quitar VIP':'Marcar VIP'}</button>
+    </td>
+  </tr>`;
+}
+
+function counters(list){
+  $('#cTotal').textContent = list.length;
+  $('#cVip').textContent   = list.filter(x=>x.tier==='VIP').length;
+}
+
+function render(){
+  const q  = $('#q').value.toLowerCase().trim();
+  const t  = $('#fTier').value || 'ALL';
+  const view = CLIENTES.filter(c=>{
+    const okQ = !q || `${c.name} ${c.email}`.toLowerCase().includes(q);
+    const okT = t==='ALL' || c.tier===t;
+    return okQ && okT;
+  });
+  $('#rows').innerHTML = view.map(row).join('');
+  counters(view);
+}
+$('#q').addEventListener('input', render);
+$('#fTier').addEventListener('change', render);
+
+document.addEventListener('click',(e)=>{
+  const addPts = e.target.closest('[data-points]')?.dataset.points;
+  const togVip = e.target.closest('[data-togglevip]')?.dataset.togglevip;
+  if(addPts){
+    const c = CLIENTES.find(x=>x.id===addPts); if(!c) return;
+    c.points += 100; c.last = new Date().toISOString().slice(0,10);
+    render();
+  }
+  if(togVip){
+    const c = CLIENTES.find(x=>x.id===togVip); if(!c) return;
+    c.tier = (c.tier==='VIP'?'REGULAR':'VIP');
+    render();
+  }
+});
+
+// ---------- Nuevo cliente (modal) ----------
+$('#btnNew').addEventListener('click', ()=> $('#dlg').showModal());
+$('#formNew').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const name = $('#nName').value.trim();
+  const mail = $('#nEmail').value.trim();
+  const vip  = $('#nVip').checked;
+  if(!name || !mail) return;
+  CLIENTES.push({ id: crypto.randomUUID(), name, email:mail, points:0, last: new Date().toISOString().slice(0,10), tier: vip?'VIP':'REGULAR' });
+  $('#dlg').close();
+  e.target.reset();
+  render();
+});
+
+// métricas laterales
+function refreshMetrics(){
+  const sales = parseFloat(localStorage.getItem('pos_sales')||'0');
+  const tks   = parseInt(localStorage.getItem('pos_tickets')||'0',10);
+  const avg   = parseFloat(localStorage.getItem('pos_avg')||'0');
+  $('#mSales').textContent   = `$${(sales||0).toFixed(2)}`;
+  $('#mTickets').textContent = tks||0;
+  $('#mAvg').textContent     = `$${(avg||0).toFixed(2)}`;
+}
+render();
+refreshMetrics();
+</script>
+  <script src="js/admin-kit.js"></script>
+  
+</body>
+</html>

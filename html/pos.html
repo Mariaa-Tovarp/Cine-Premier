@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Premier Films – Punto de Venta</title>
+
+    <!-- Estilos globales + POS -->
+    <link rel="stylesheet" href="css/Styles.css" />
+    <link rel="stylesheet" href="css/pos.css" />
+</head>
+
+<body>
+
+    <!-- ========================= NAV SUPERIOR ========================= -->
+    <header class="nav">
+        <div class="nav-inner">
+            <a class="brand">
+                <span class="logo"></span>
+                <div>
+                    Premier Films<br>
+                    <small>Punto de Venta</small>
+                </div>
+            </a>
+
+            <div style="flex:1"></div>
+
+            <div class="nav-actions">
+                <div class="user-pill">Cajero</div>
+                <button id="logout" class="btn-ghost">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================= LAYOUT PRINCIPAL ========================= -->
+    <main class="pos-container">
+
+        <!-- ========== SIDEBAR IZQUIERDO ========== -->
+        <aside class="sidebar">
+            <div class="side-brand">
+                <div class="app-ico">🎬</div>
+                <div>
+                    <b>Premier Films</b><br>
+                    <small>Caja</small>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <!-- SOLO ESTAS DOS OPCIONES -->
+                <a href="pos.html" class="item active">Punto de Venta</a>
+                <a href="reservas-cajero.html" class="item">Reservas</a>
+            </nav>
+
+            <button id="btnLogout" class="item logout">⟲ Cerrar Sesión</button>
+        </aside>
+
+        <!-- ========== PANEL PRINCIPAL (PASOS) ========== -->
+        <section class="main">
+
+            <!-- Paso 1: Películas -->
+            <section id="step-movies" class="panel">
+                <h2>Seleccionar Película</h2>
+                <div id="movieList" class="movie-grid"></div>
+            </section>
+
+            <!-- Paso 2: Horarios -->
+            <section id="step-showtimes" class="panel hidden">
+                <button id="btnBackMovies" class="btn-ghost">← Volver</button>
+                <h2 id="movieTitle">Horarios</h2>
+                <div id="showtimeList" class="showtime-grid"></div>
+            </section>
+
+            <!-- Paso 3: Asientos -->
+            <section id="step-seats" class="panel hidden">
+                <button id="btnBackShowtimes" class="btn-ghost">← Volver</button>
+                <h2 id="seatTitle">Seleccionar Asientos</h2>
+                <div id="seatMap"></div>
+            </section>
+
+        </section>
+
+        <!-- ========== CARRITO (DERECHA) ========== -->
+        <aside class="cart">
+            <h2>Carrito</h2>
+            <div id="cartItems" class="cart-items"></div>
+            <hr/>
+            <div class="cart-totals">
+                <div class="line">
+                    <span>Subtotal</span>
+                    <b id="cartSubtotal">$0.00</b>
+                </div>
+                <div class="line">
+                    <span>Total</span>
+                    <b id="cartTotal">$0.00</b>
+                </div>
+            </div>
+            <button id="btnReserve" class="btn warn" disabled>Reservar</button>
+            <button id="btnPay" class="btn primary" disabled>Pagar</button>
+        </aside>
+
+    </main>
+
+    <!-- ========================= MODAL CLIENTE ========================= -->
+    <div id="clientModal" class="client-modal hidden">
+        <div class="client-modal-content">
+            <h3>Datos del Cliente</h3>
+
+            <label>Nombre</label>
+            <input id="clientName" type="text" placeholder="Ej: Carlos Pérez">
+
+            <label>Correo</label>
+            <input id="clientEmail" type="email" placeholder="Ej: carlos@gmail.com">
+
+            <div class="client-modal-buttons">
+                <button id="clientCancel" class="btn-ghost">Cancelar</button>
+                <button id="clientContinue" class="btn primary">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= LÓGICA ========================= -->
+    <script src="js/pos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Factura | Premier Films</title>
+  <link rel="stylesheet" href="./css/styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #050816;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .ticket-wrapper {
+      padding: 24px;
+    }
+
+    .ticket {
+      position: relative;
+      width: 360px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: #fdfaf3;
+      color: #222;
+      border-radius: 12px;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .ticket::before,
+    .ticket::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      height: 12px;
+      background-image: radial-gradient(circle at 10px -3px, transparent 8px, #fdfaf3 8px);
+      background-size: 20px 20px;
+      background-repeat: repeat-x;
+      z-index: 2;
+    }
+    .ticket::before {
+      top: -8px;
+    }
+    .ticket::after {
+      bottom: -8px;
+      transform: translateX(-50%) rotate(180deg);
+    }
+
+    .ticket-inner {
+      padding: 18px 20px 20px 20px;
+    }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .ticket-brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+    }
+
+    .ticket-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .ticket-format-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #444;
+      background: #f8f4ea;
+    }
+
+    .ticket-id {
+      font-size: 0.78rem;
+      color: #777;
+      margin-bottom: 12px;
+    }
+
+    .divider {
+      border-top: 1px dashed #ccc;
+      margin: 10px 0 12px 0;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .ticket-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin: 3px 0;
+    }
+
+    .ticket-row span:first-child {
+      color: #666;
+    }
+
+    .ticket-row span:last-child {
+      font-weight: 500;
+    }
+
+    .ticket-row.total {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #ddd;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .ticket-qr {
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .ticket-qr img {
+      width: 140px;
+      height: 140px;
+      image-rendering: crisp-edges;
+    }
+
+    .ticket-footer {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #777;
+    }
+
+    .ticket-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.86rem;
+    }
+
+    .btn-primary {
+      background: #ffb300;
+      border: none;
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #ccc;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.95);
+    }
+
+    .btn-secondary:hover {
+      background: #f3f3f3;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+      .ticket-wrapper {
+        padding: 0;
+      }
+      .ticket {
+        box-shadow: none;
+      }
+      .ticket-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticket-wrapper">
+    <div class="ticket">
+      <div class="ticket-inner">
+        <div class="ticket-header">
+          <div>
+            <div class="ticket-brand">Premier Films</div>
+            <div class="ticket-subtitle">Factura de compra</div>
+          </div>
+          <span class="ticket-format-pill" id="invFormat">2D</span>
+        </div>
+
+        <div class="ticket-id" id="invId">ID: —</div>
+
+        <div class="divider"></div>
+
+        <div>
+          <div class="section-title">Detalles de la función</div>
+
+          <div class="ticket-row"><span>Película</span><span id="invMovie">—</span></div>
+          <div class="ticket-row"><span>Cine</span><span id="invCinema">—</span></div>
+          <div class="ticket-row"><span>Fecha</span><span id="invDate">—</span></div>
+          <div class="ticket-row"><span>Hora</span><span id="invTime">—</span></div>
+          <div class="ticket-row"><span>Sala</span><span id="invHall">—</span></div>
+          <div class="ticket-row"><span>Fila(s)</span><span id="invRows">—</span></div>
+          <div class="ticket-row"><span>Asientos</span><span id="invSeats">—</span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <div class="section-title">Resumen de pago</div>
+
+          <div class="ticket-row">
+            <span>Subtotal</span>
+            <span id="invSubtotal">$ 0</span>
+          </div>
+          <div class="ticket-row">
+            <span>Descuento</span>
+            <span id="invDiscount">0% ($ 0)</span>
+          </div>
+          <!-- 🔹 Nueva fila: puntos usados -->
+          <div class="ticket-row">
+            <span>Puntos usados</span>
+            <span id="invPointsUsed">0 pts ($ 0)</span>
+          </div>
+          <div class="ticket-row total">
+            <span>Total</span>
+            <span id="invTotal">$ 0</span>
+          </div>
+        </div>
+
+        <div class="ticket-qr">
+          <img id="invQr" src="" alt="Código QR de la factura">
+        </div>
+
+        <div class="ticket-actions">
+          <button class="btn-secondary" id="btnImprimir">Imprimir</button>
+          <button class="btn-primary" id="btnVolver">Volver al inicio</button>
+        </div>
+
+        <div class="ticket-footer">
+          Gracias por tu compra y disfruta la función 🎬
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/factura.js"></script>
+  <script>
+    document.getElementById('btnImprimir')?.addEventListener('click', () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>

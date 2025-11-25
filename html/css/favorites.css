@@ -1,0 +1,100 @@
+/* ============================
+   PREMIER · Favoritos (UI)
+   ============================ */
+:root{
+  --container:1280px;
+}
+
+/* Page wrapper igual que otras páginas */
+main.page{
+  max-width: var(--container);
+  margin: 20px auto;
+  padding: 0 18px;
+}
+main.page > h1{
+  font-size: 28px;
+  font-weight: 800;
+  margin: 6px 0 16px;
+  color: var(--text,#e5e7eb);
+}
+
+/* Panel base */
+#fav-container .panel{
+  background: var(--panel,#0f172a);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius,18px);
+  box-shadow: var(--shadow,0 14px 34px rgba(0,0,0,.35));
+  padding: 14px;
+  overflow: hidden;
+}
+
+/* Grid de cards (match carrito) */
+#fav-container .list{ display:grid; gap:12px; }
+#fav-container .card{
+  display:grid;
+  grid-template-columns:92px 1fr auto;
+  gap:14px;
+  background:#0d1426;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:10px;
+}
+@media (max-width:640px){
+  #fav-container .card{ grid-template-columns:72px 1fr; }
+}
+
+/* Poster */
+#fav-container .thumb{ width:100%; height:92px; border-radius:10px; overflow:hidden; background:#0b1224; }
+#fav-container .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Cuerpo de la card */
+#fav-container .body{ display:flex; flex-direction:column; gap:6px; }
+#fav-container .title{ font-weight:800; color:#fff; }
+#fav-container .meta{ color:#b6c2d6; font-size:13px; display:flex; gap:8px; flex-wrap:wrap; }
+#fav-container .badge{
+  display:inline-flex; align-items:center; gap:6px;
+  background:#0f172a; color:#cbd5e1;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:999px; padding:4px 8px; font-size:12px;
+}
+
+/* Acciones */
+#fav-container .actions{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+#fav-container .btn-ghost{
+  background:transparent; border:1px solid rgba(255,255,255,.18);
+  color:#e5e7eb; border-radius:12px; padding:10px 14px; font-weight:700;
+  text-decoration:none; cursor:pointer;
+}
+#fav-container .btn-ghost:hover{ background:#101827; border-color:#2a3448; color:#fff; }
+#fav-container .remove{
+  background:transparent; border:1px solid rgba(255,255,255,.12);
+  color:#e5e7eb; padding:6px 10px; border-radius:10px; cursor:pointer;
+}
+#fav-container .remove:hover{ border-color:#2a3448; background:#101827; color:#fff; }
+
+/* Estado vacío */
+#fav-container .empty{ padding:30px; text-align:center; color:#cbd5e1; }
+#fav-container .empty .btn-ghost{ margin-top:10px; }
+/* --- FIX: estado vacío recortado en Favoritos --- */
+#fav-container .panel:has(.empty){
+  padding: 26px 18px;         /* asegura respiro interno */
+}
+
+#fav-container .empty{
+  display:flex;               /* centra contenido */
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height: 160px;          /* altura mínima real */
+  line-height:1.85;           /* evita texto/btn aplastado */
+}
+
+#fav-container .empty > *{    /* separaciones entre texto y botón */
+  margin: 6px 0;
+}
+
+#fav-container .empty .btn-ghost{
+  line-height:1;              /* corrige pill recortado */
+  padding:10px 14px;
+  border-radius:12px;
+}

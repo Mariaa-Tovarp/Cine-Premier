@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin · Funciones y Horarios</title>
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+      <span class="logo"></span>
+      <div>Premier Films<br><small>Funciones y horarios</small></div>
+    </a>
+    <div style="flex:1"></div>
+    <div class="nav-actions">
+      <button id="btnLogout" class="btn-ghost">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="admin-wrap">
+  <aside class="admin-side">
+    <div class="side-brand">
+      <div class="app-ico">🎬</div>
+      <div><b>Premier Films</b><small>Administración</small></div>
+    </div>
+    <nav class="side-nav">
+      <a class="item active" href="admin.html">Dashboard Ejecutivo</a>
+        <a class="item" href="admin-peliculas.html">Películas</a>
+        <a class="item" href="admin-funciones.html">Funciones y Horarios</a>
+        <a class="item" href="admin-usuarios.html">Usuarios del Sistema</a>
+    </nav>
+    <div class="side-foot">
+      <a class="item" id="logoutLink">↩ Cerrar Sesión</a>
+    </div>
+  </aside>
+
+  <section class="admin-main">
+    <div class="page-head">
+      <div>
+        <h1>Funciones y Horarios</h1>
+        <p class="muted">Asignar sala, formato y horario a cada película</p>
+      </div>
+      <div id="adminUser" class="user-pill">Admin</div>
+    </div>
+
+    <!-- Filtros / selección de película -->
+    <section class="panel" style="margin-bottom:16px">
+      <div class="form-row">
+        <div style="flex:2">
+          <label class="muted">Película</label><br>
+          <select id="movieSelect" class="input" style="width:100%">
+            <option value="">Selecciona una película…</option>
+          </select>
+        </div>
+        <div>
+          <label class="muted">Cine (opcional si manejas varios)</label><br>
+          <input id="cinemaId" class="input" type="number" min="1" placeholder="ID de cine (ej: 1)">
+        </div>
+      </div>
+    </section>
+
+    <!-- Alta de función -->
+    <section class="panel">
+      <h3>Nueva Función</h3>
+      <div class="form-row">
+        <div>
+          <label class="muted">Fecha y hora</label><br>
+          <input id="scrDatetime" class="input" type="datetime-local">
+        </div>
+        <div>
+          <label class="muted">Sala</label><br>
+          <input id="scrHall" class="input" placeholder="Sala 1, Sala 2…">
+        </div>
+        <div>
+          <label class="muted">Formato</label><br>
+          <select id="scrFormat" class="input">
+            <option value="2D">2D</option>
+            <option value="3D">3D</option>
+            <option value="IMAX">IMAX</option>
+          </select>
+        </div>
+        <div>
+          <label class="muted">Precio base</label><br>
+          <input id="scrPrice" class="input" type="number" min="0" step="1000" placeholder="18000">
+        </div>
+        <div style="align-self:flex-end">
+          <button id="btnAddScreening" class="btn-primary">+ Agregar Función</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Listado de funciones -->
+    <section class="panel" style="margin-top:16px">
+      <h3>Funciones programadas</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Inicio</th>
+            <th>Sala</th>
+            <th>Formato</th>
+            <th>Precio base</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbScreenings">
+          <tr><td colspan="5" class="muted">Selecciona una película para ver sus funciones.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+</main>
+
+<script src="js/admin-kit.js"></script>
+<script src="js/admin-funciones.js"></script>
+</body>
+</html>

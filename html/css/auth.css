@@ -1,0 +1,74 @@
+/* ====== Auth page (oscuro, consistente) ====== */
+:root{
+  --bg:#0b1224; --bg2:#0c1326; --panel:#0f172a;
+  --text:#e5e7eb; --muted:#b6c2d6; --ring:#1e293b;
+  --brand:#facc15; --accent:#8dd3ff;
+  --radius:18px; --shadow:0 18px 50px rgba(0,0,0,.35);
+}
+
+html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+
+/* -------- page wrapper -------- */
+.auth-page{max-width:760px;margin:28px auto 40px;padding:0 18px}
+.back-link{display:inline-block;margin:4px 0 14px;color:#cbd5e1}
+.back-link:hover{color:#fff}
+
+/* -------- card -------- */
+.auth-card{
+  background:linear-gradient(180deg,var(--panel),#0b1224);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px 18px 22px;
+}
+.auth-head{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:10px}
+.auth-head .avatar{width:72px;height:72px;border-radius:999px;display:grid;place-items:center;background:#ffe066;color:#111;font-size:36px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.auth-head h1{margin:4px 0 0}
+.auth-head p{color:#cbd5e1;margin:0}
+
+/* -------- tabs -------- */
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px auto 12px;max-width:520px}
+.switch-btn{
+  padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+  background:#0f172a;color:#cbd5e1;font-weight:800;cursor:pointer
+}
+.switch-btn.is-active{background:#0b1224;border-color:#2a3448;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+
+/* -------- form -------- */
+.form{display:none;max-width:520px;margin:0 auto}
+.form.is-active{display:block}
+.field{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;
+  background:#0f172a;border:1px solid rgba(255,255,255,.14);border-radius:12px;
+  padding:10px 12px;margin:10px 0
+}
+.field input{background:transparent;border:0;outline:0;color:#e5e7eb}
+.field .peek{background:transparent;border:0;color:#cbd5e1;cursor:pointer}
+.field .peek:hover{color:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;margin:6px 0 12px}
+.link{color:#cbd5e1}.link:hover{color:#fff}
+
+.btn-primary{
+  width:100%;background:var(--brand);color:#111827;border:0;border-radius:12px;
+  padding:12px 14px;font-weight:900;cursor:pointer;box-shadow:0 4px 12px rgba(251,191,36,.35)
+}
+.btn-primary:hover{filter:brightness(1.06);box-shadow:0 6px 16px rgba(251,191,36,.45)}
+
+.helper{background:#0c1423;border:1px dashed rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;margin:12px 0;color:#d1d7e6;font-size:13px}
+.or{color:#9fb1cc;text-align:center;margin:10px 0 8px}
+.btn-social{
+  width:100%;background:#0f172a;border:1px solid rgba(255,255,255,.14);color:#e5e7eb;
+  border-radius:12px;padding:10px 14px;font-weight:700;margin:6px 0;cursor:pointer
+}
+.btn-social:hover{background:#101827;border-color:#2a3448}
+
+.note{color:#a7b0c4;font-size:12px;margin:10px 0 0}
+
+/* VIP CTA */
+.vip-cta{
+  display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+  background:#fff7cc10;border:1px solid rgba(250,204,21,.22);border-radius:14px;padding:12px;margin:12px 0 0
+}
+.vip-ico{font-size:22px}
+.vip-cta .chip{background:#ffe066;color:#111;padding:8px 12px;border-radius:999px;font-weight:800;text-decoration:none}
+.vip-cta .chip:hover{filter:brightness(1.05)}

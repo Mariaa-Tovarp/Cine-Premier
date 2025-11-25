@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Premier Films – Reservas</title>
+
+<style>
+  :root {
+    --bg-main: #050816;
+    --bg-panel: #0b1220;
+    --bg-sidebar: #020617;
+    --bg-nav-btn: #0f172a;
+    --bg-nav-btn-active: #1d4ed8;
+    --bg-header: #020617;
+    --border-subtle: #1f2937;
+    --text-main: #e5e7eb;
+    --text-muted: #9ca3af;
+    --accent-yellow: #facc15;
+    --danger: #dc2626;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    display: flex;
+    height: 100vh;
+  }
+
+  /* --- SIDEBAR --- */
+  .sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--accent-yellow);
+  }
+
+  .brand-text-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .brand-text-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #030712;
+    border-radius: 12px;
+    padding: 14px 12px;
+    margin-bottom: 22px;
+  }
+
+  .profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    background: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .profile-title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .profile-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-btn {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 12px;
+    text-align: left;
+    cursor: pointer;
+    background: var(--bg-nav-btn);
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .nav-btn:hover {
+    background: #111827;
+    transform: translateY(-1px);
+  }
+
+  .nav-btn.active {
+    background: var(--bg-nav-btn-active);
+  }
+
+  .sidebar-logout {
+    margin-top: auto;
+    margin-bottom: 6px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 12px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--danger);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .sidebar-logout:hover {
+    opacity: 0.9;
+  }
+
+  .sidebar-logout-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+  }
+
+  /* --- MAIN --- */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* --- TOPBAR --- */
+  .topbar {
+    height: 64px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .topbar-title {
+    font-weight: 600;
+    font-size: 17px;
+  }
+
+  .topbar-section {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .user-role {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .btn-logout {
+    background: #111827;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--text-main);
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid #1f2937;
+  }
+
+  .btn-logout:hover {
+    background: #1f2937;
+  }
+
+  /* --- CONTENT --- */
+  .content {
+    flex: 1;
+    padding: 26px 28px;
+    overflow-y: auto;
+    background: var(--bg-main);
+  }
+
+  h1 {
+    margin: 0 0 14px 0;
+    font-size: 24px;
+  }
+
+  .content-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .panel {
+    background: var(--bg-panel);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    margin-top: 8px;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  input, select {
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: none;
+    outline: none;
+    background: #020617;
+    color: #e5e7eb;
+    font-size: 14px;
+  }
+
+  input::placeholder {
+    color: #6b7280;
+  }
+
+  button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .btn-search { background: #2563eb; color: white; }
+  .btn-reset  { background: #374151; color: white; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th {
+    background: #020617;
+    padding: 10px;
+    font-size: 13px;
+    text-align: left;
+    color: #9ca3af;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #020617;
+  }
+
+  .status {
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .CONFIRMED { background: #2563eb; }
+  .PAID      { background: #16a34a; }
+  .CANCELLED { background: #dc2626; }
+
+  .actions button {
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+
+  .btn-pay    { background: #e5e7eb; color: #020617; }
+  .btn-ticket { background: #f59e0b; color: #020617; }
+  .btn-cancel { background: #ef4444; color: #fff; }
+  .btn-delete { background: #6b7280; color: #fff; }
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <!-- Igual que POS: logo + título arriba -->
+  <div class="brand">
+    <div class="brand-icon"></div>
+    <div>
+      <div class="brand-text-title">Premier Films</div>
+      <div class="brand-text-sub">Caja</div>
+    </div>
+  </div>
+
+  <!-- Tarjeta de perfil (similar a POS) -->
+  <div class="profile-card">
+    <div class="profile-avatar">🎬</div>
+    <div>
+      <div class="profile-title">Premier Films</div>
+      <div class="profile-sub">Cajero</div>
+    </div>
+  </div>
+
+  <!-- Navegación: se siente como “pestañas” -->
+  <div class="nav">
+    <button class="nav-btn" onclick="location.href='pos.html'">Punto de Venta</button>
+    <button class="nav-btn active" onclick="location.href='reservas-cajero.html'">Reservas</button>
+  </div>
+
+  <!-- Cerrar sesión al fondo -->
+  <button class="sidebar-logout">
+    <a class="sidebar-logout-link" href="../backend/auth/logout.php">Cerrar Sesión</a>
+  </button>
+</div>
+
+<!-- MAIN AREA -->
+<div class="main">
+
+  <!-- TOP BAR (igual estructura que POS) -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Premier Films</span>
+      <span class="topbar-section">Reservas</span>
+    </div>
+    <div class="topbar-right">
+      <span class="user-role">Cajero</span>
+      <a class="btn-logout" href="../backend/auth/logout.php">Cerrar Sesión</a>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="content">
+    <h1>Gestión de Reservas</h1>
+    <div class="content-subtitle">
+      Consulta y gestiona reservas generadas desde el POS y la web.
+    </div>
+
+    <div class="panel">
+      <div class="toolbar">
+        <input id="search" placeholder="Buscar por código, película o cliente">
+        <select id="filterState">
+          <option value="">Todos los estados</option>
+          <option value="CONFIRMED">Confirmados</option>
+          <option value="PAID">Pagados</option>
+          <option value="CANCELLED">Cancelados</option>
+        </select>
+
+        <button class="btn-search" onclick="loadBookings()">Buscar</button>
+        <button class="btn-reset" onclick="resetFilters()">Limpiar</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Película</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Sala</th>
+            <th>Asientos</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadBookings() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const st = document.getElementById("filterState").value;
+
+  const res = await fetch("../backend/pos/reservas-list.php");
+  const data = await res.json();
+
+  if (!data.ok) return alert("Error cargando reservas");
+
+  let rows = data.reservas;
+
+  if (q) {
+    rows = rows.filter(r =>
+      r.code.toLowerCase().includes(q) ||
+      r.client.toLowerCase().includes(q) ||
+      r.movie.toLowerCase().includes(q)
+    );
+  }
+
+  if (st) rows = rows.filter(r => r.status === st);
+
+  render(rows);
+}
+
+function resetFilters() {
+  document.getElementById("search").value = "";
+  document.getElementById("filterState").value = "";
+  loadBookings();
+}
+
+function render(list) {
+  const tbody = document.getElementById("rows");
+  tbody.innerHTML = "";
+
+  list.forEach(r => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${r.id}</td>
+      <td>${r.code}</td>
+      <td>${r.client}</td>
+      <td>${r.movie}</td>
+      <td>${r.date}</td>
+      <td>${r.time}</td>
+      <td>${r.room}</td>
+      <td>${r.seats}</td>
+      <td>$${Number(r.total).toLocaleString()}</td>
+      <td><span class="status ${r.status}">${r.status}</span></td>
+      <td class="actions">
+        <button class="btn-pay" onclick="pay(${r.id})">Cobrar</button>
+        <button class="btn-ticket" onclick="printTicket(${r.id})">Ticket</button>
+        <button class="btn-cancel" onclick="cancelBooking(${r.id})">Anular</button>
+        <button class="btn-delete" onclick="deleteBooking(${r.id})">Eliminar</button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+async function pay(id) {
+  if (!confirm("¿Cobrar esta reserva?")) return;
+
+  const res = await fetch("../backend/pos/reservas-pay.php?id=" + id);
+  const data = await res.json();
+
+  if (!data.ok) return alert(data.error);
+
+  loadBookings();
+
+  if (window.opener && window.opener.location.href.includes("pos.html")) {
+    window.opener.location.reload();
+  }
+
+  alert("Reserva pagada correctamente");
+}
+
+function printTicket(id) {
+  window.print();
+}
+
+async function cancelBooking(id) {
+  if (!confirm("¿Cancelar esta reserva?")) return;
+
+  const res = await fetch("../backend/pos/reservas-cancel.php?id=" + id);
+  const data = await res.json();
+
+  if (!data.ok) return alert(data.error);
+
+  loadBookings();
+}
+
+async function deleteBooking(id) {
+  if (!confirm("¿Eliminar esta reserva definitivamente?")) return;
+
+  const form = new FormData();
+  form.append("id", id);
+
+  const res = await fetch("../backend/pos/reservas-delete.php", {
+    method: "POST",
+    body: form
+  });
+
+  const data = await res.json();
+  if (!data.ok) return alert(data.error);
+
+  loadBookings();
+}
+
+loadBookings();
+</script>
+
+</body>
+</html>

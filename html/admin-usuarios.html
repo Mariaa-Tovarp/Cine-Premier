@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin · Usuarios del Sistema</title>
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+      <span class="logo"></span>
+      <div>Premier Films<br><small>Usuarios del Sistema</small></div>
+    </a>
+    <div style="flex:1"></div>
+    <div class="nav-actions">
+      <button id="btnLogout" class="btn-ghost">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="admin-wrap">
+  <aside class="admin-side">
+    <div class="side-brand">
+      <div class="app-ico">🎬</div>
+      <div><b>Premier Films</b><small>Administración</small></div>
+    </div>
+    <nav class="side-nav">
+      <a class="item" href="admin.html">Dashboard Ejecutivo</a>
+      <a class="item" href="admin-peliculas.html">Películas</a>
+      <a class="item" href="admin-reservas.html">Reservas y Ventas</a>
+      <a class="item active" href="admin-usuarios.html">Usuarios del Sistema</a>
+    </nav>
+    <div class="side-foot">
+      <a class="item" id="logoutLink">↩ Cerrar Sesión</a>
+    </div>
+  </aside>
+
+  <section class="admin-main">
+    <div class="page-head">
+      <div>
+        <h1>Usuarios del Sistema</h1>
+        <p class="muted">Admins, cajeros, operadores</p>
+      </div>
+      <div id="adminUser" class="user-pill">Admin</div>
+    </div>
+
+    <div class="filterbar">
+      <input id="qUser" class="input" placeholder="Buscar por nombre o correo…">
+      <select id="fRole" class="input">
+        <option value="">Rol (todos)</option>
+        <option value="admin">Administrador</option>
+        <option value="cashier">Cajero</option>
+        <option value="ops">Operaciones</option>
+      </select>
+      <button id="btnNewUser" class="btn-primary">+ Nuevo Usuario</button>
+    </div>
+
+    <section class="panel">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Último acceso</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbUsers">
+          <!-- Se rellena desde JS -->
+        </tbody>
+      </table>
+    </section>
+  </section>
+</main>
+
+<script src="js/admin-kit.js"></script>
+<script src="js/admin-usuarios.js"></script>
+</body>
+</html>

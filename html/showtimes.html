@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Funciones | Premier Films</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    .showtimes-wrapper {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 16px;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+    }
+    .showtimes-header {
+      margin-bottom: 20px;
+    }
+    .showtimes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .showtimes-card {
+      background: #111827;
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+    }
+    .showtimes-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 1rem;
+    }
+    .showtimes-date {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+    .time-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      padding: 6px 12px;
+      margin: 4px 6px 0 0;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #111827;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .time-chip:hover {
+      background: #fbbf24;
+      color: #111827;
+      border-color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showtimes-wrapper">
+    <div class="showtimes-header">
+      <h1 id="movieTitle">Funciones</h1>
+      <p id="movieMeta"></p>
+    </div>
+
+    <div id="showtimesContainer" class="showtimes-grid">
+      <!-- aquí se pintan las tarjetas de días y horarios -->
+    </div>
+  </div>
+
+  <script src="./js/showtimes.js"></script>
+</body>
+</html>

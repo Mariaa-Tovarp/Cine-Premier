@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin · Películas</title>
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+ 
+</head>
+<body>
+ <header class="nav">
+    <div class="nav-inner">
+        <span class="logo"></span>
+        <div>Premier Films<br><small>peliculas</small></div>
+      </a>
+      <div style="flex:1"></div>
+      <div class="nav-actions">
+        <button id="btnLogout" class="btn-ghost" >Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+<main class="admin-wrap">
+  <aside class="admin-side">
+    <div class="side-brand"><div class="app-ico">🎬</div><div><b>Premier Films</b><small>Administración</small></div></div>
+    <nav class="side-nav">
+      <a class="item active" href="admin.html">Dashboard Ejecutivo</a>
+        <a class="item" href="admin-peliculas.html">Películas</a>
+        <a class="item" href="admin-funciones.html">Funciones y Horarios</a>
+        <a class="item" href="admin-usuarios.html">Usuarios del Sistema</a>
+    </nav>
+    <div class="side-foot">
+      <a class="item" id="logoutLink">↩ Cerrar Sesión</a>
+    </div>
+  </aside>
+
+  <section class="admin-main">
+    <div class="page-head">
+      <div>
+        <h1>Películas</h1>
+        <p class="muted">Gestión del catálogo (alta / baja / edición)</p>
+      </div>
+      <div id="adminUser" class="user-pill">Admin</div>
+    </div>
+
+    <div class="filterbar">
+      <input id="qMovie" class="input" placeholder="Buscar por título…">
+      <select id="fFormat">
+        <option value="">Formato (todos)</option>
+        <option>2D</option><option>3D</option><option>IMAX</option>
+      </select>
+      <button id="btnNewMovie" class="btn-primary">+ Nueva Película</button>
+    </div>
+
+    <section class="panel">
+      <table class="table">
+        <thead>
+          <tr><th>Título</th><th>Género</th><th>Duración</th><th>Formatos</th><th>Rating</th><th></th></tr>
+        </thead>
+        <tbody id="tbMovies"></tbody>
+      </table>
+    </section>
+  </section>
+</main>
+<section class="peliculas">
+  <h2>Catálogo de Películas</h2>
+  <div id="pelisGrid" class="grid"></div>
+</section>
+
+<script src="js/admin-kit.js"></script>
+<script src="js/admin-peliculas.js"></script>
+</body>
+</html>

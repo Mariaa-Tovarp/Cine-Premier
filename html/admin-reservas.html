@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin · Reservas y Ventas</title>
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+ 
+</head>
+<body>
+<header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="logo"></span>
+        <div>Premier Films<br><small>reservas</small></div>
+      </a>
+      <div style="flex:1"></div>
+      <div class="nav-actions">
+        <button id="btnLogout" class="btn-ghost" >Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+
+<main class="admin-wrap">
+  <aside class="admin-side">
+    <div class="side-brand"><div class="app-ico">🎬</div><div><b>Premier Films</b><small>Administración</small></div></div>
+    <nav class="side-nav">
+      <a class="item active" href="admin.html">Dashboard Ejecutivo</a>
+        <a class="item" href="admin-peliculas.html">Películas</a>
+        <a class="item" href="admin-funciones.html">Funciones y Horarios</a>
+        <a class="item" href="admin-reservas.html">Reservas y Ventas</a>
+        <a class="item" href="admin-usuarios.html">Usuarios del Sistema</a>
+    </nav>
+    <div class="side-foot"><a class="item" id="logoutLink">↩ Cerrar Sesión</a></div>
+  </aside>
+
+  <section class="admin-main">
+    <div class="page-head">
+      <div><h1>Reservas y Ventas</h1><p class="muted">Control de transacciones y entradas</p></div>
+      <div id="adminUser" class="user-pill">Admin</div>
+    </div>
+
+    <div class="filterbar">
+      <input id="qRes" class="input" placeholder="Buscar por película o cliente…">
+      <select id="fState">
+        <option value="">Estado (todos)</option>
+        <option value="paid">Pagado</option>
+        <option value="pending">Pendiente</option>
+        <option value="cancel">Cancelado</option>
+      </select>
+      <button id="btnNewSale" class="btn-primary">+ Registrar Venta</button>
+    </div>
+
+    <section class="panel">
+      <table class="table">
+        <thead><tr><th>#</th><th>Película</th><th>Cliente</th><th>Fecha/Hora</th><th>Asientos</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+        <tbody id="tbRes"></tbody>
+      </table>
+    </section>
+  </section>
+</main>
+<script>
+// ======== SEGURIDAD + LOGOUT (robusto) ========
+document.addEventListener('DOMContentLoaded', () => {
+  const LS_USER = 'pf_user';
+
+  // Lee la sesión (sessionStorage > localStorage)
+  function getSession() {
+    try {
+      return JSON.parse(sessionStorage.getItem(LS_USER)) ||
+             JSON.parse(localStorage.getItem(LS_USER)) || null;
+    } catch { return null; }
+  }
+
+  // Guard genérico (fallback)
+  function guard(opts = {}) {
+    const { roles = [], login = 'auth.html' } = opts;
+    const me = getSession();
+    const ok = !!me && (!roles.length || roles.includes(me.role));
+    if (!ok) { location.href = login; return null; }
+    return me;
+  }
+
+  // Monta chip de usuario
+  function mountUser(target, user) {
+    const el = document.querySelector(target);
+    if (!el || !user) return;
+    el.textContent = `${user.name || 'Usuario'} · ${user.email || ''}`.trim();
+  }
+
+  // Conecta logout a varios botones (navbar, sidebar, etc.)
+  function wireLogout(selectors, login = 'auth.html') {
+    (Array.isArray(selectors) ? selectors : [selectors])
+      .flatMap(sel => [...document.querySelectorAll(sel)])
+      .forEach(el => {
+        if (!el) return;
+        if (el.tagName === 'BUTTON' && !el.type) el.type = 'button';
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          try {
+            localStorage.removeItem(LS_USER);
+            sessionStorage.removeItem(LS_USER);
+          } finally {
+            location.href = login;
+          }
+        });
+      });
+  }
+
+  // Usa AdminKit si está, sino fallback
+  const AK = window.AdminKit || {};
+  const me = (AK.guard ? AK.guard({ roles: ['cashier','admin'] })
+                       : guard({ roles: ['cashier','admin'] }));
+  if (!me) return;
+
+  if (AK.mountUserBadge) AK.mountUserBadge('#posUser', me);
+  else mountUser('#posUser', me);
+
+  // IMPORTANTE: incluye también el botón de la barra de navegación (#navLogout)
+  if (AK.wireLogout) AK.wireLogout(['#btnLogout', '#logoutLink', '#navLogout']);
+  else wireLogout(['#btnLogout', '#logoutLink', '#navLogout']);
+});
+
+const RES = [
+  { id:'R-1001', movie:'Tron Ares', client:'Juan Pérez', datetime:'2025-08-29 19:30', seats:'E8,E9', total:24000, state:'paid' },
+  { id:'R-1002', movie:'Avatar', client:'Ana Ruiz', datetime:'2025-08-29 17:00', seats:'C5', total:12000, state:'pending' },
+  { id:'R-1003', movie:'Neón', client:'Carlos Vidal', datetime:'2025-08-28 21:40', seats:'H2,H3,H4', total:36000, state:'cancel' },
+];
+
+function statusBadge(s){
+  if(s==='paid') return `<span class="badge status ok">Pagado</span>`;
+  if(s==='pending') return `<span class="badge status warn">Pendiente</span>`;
+  return `<span class="badge status err">Cancelado</span>`;
+}
+
+function row(r){
+  return `<tr>
+    <td>${r.id}</td>
+    <td>${r.movie}</td>
+    <td>${r.client}</td>
+    <td>${r.datetime}</td>
+    <td>${r.seats}</td>
+    <td>$${(r.total||0).toLocaleString('es-CO')}</td>
+    <td>${statusBadge(r.state)}</td>
+    <td class="actions">
+      <button class="btn" data-inv="${r.id}">Factura</button>
+      <button class="btn" data-chg="${r.id}">Estado</button>
+      <button class="btn" data-del="${r.id}">Eliminar</button>
+    </td>
+  </tr>`;
+}
+
+function apply(){
+  const q = (document.getElementById('qRes').value||'').toLowerCase().trim();
+  const f = (document.getElementById('fState').value||'').trim();
+  const list = RES.filter(r=>{
+    const text = `${r.movie} ${r.client}`.toLowerCase();
+    return (!q || text.includes(q)) && (!f || r.state===f);
+  });
+  renderTable('#tbRes', list.map(row).join(''));
+}
+
+document.getElementById('qRes').addEventListener('input', apply);
+document.getElementById('fState').addEventListener('change', apply);
+document.addEventListener('click', e=>{
+  const inv = e.target.closest('[data-inv]'); if(inv){ alert('Mostrar factura '+inv.dataset.inv); }
+  const chg = e.target.closest('[data-chg]'); if(chg){ alert('Cambiar estado '+chg.dataset.chg); }
+  const del = e.target.closest('[data-del]'); if(del){ if(confirm('¿Eliminar?')) alert('Eliminado (demo)'); }
+});
+apply();
+
+</script>
+<script src="js/admin-kit.js"></script>
+
+</body>
+</html>

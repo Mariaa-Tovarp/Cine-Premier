@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <rect width="100%" height="100%" fill="#0b1224"/>
+  <g fill="#a78bfa" font-family="Inter, Arial, sans-serif" font-weight="700">
+    <text x="50%" y="45%" text-anchor="middle" font-size="28">No Image</text>
+    <text x="50%" y="55%" text-anchor="middle" font-size="16" fill="#cbd5e1">poster missing</text>
+  </g>
+</svg>

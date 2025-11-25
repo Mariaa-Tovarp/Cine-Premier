@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tarjeta VIP – Premier Films</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/vip.css" />
+  <link rel="stylesheet" href="css/Styles.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+
+      <a class="brand" href="Index.html">
+        <span class="logo"></span>
+        <div>Premier Films<br><small>Cinema Experience</small></div>
+      </a>
+
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path d="M21 21l-3.9-3.9M10.8 18.6a7.8 7.8 0 1 1 0-15.6 7.8 7.8 0 0 1 0 15.6z" 
+                stroke="#94a3b8" fill="none" stroke-width="2"/>
+        </svg>
+        <input type="search" placeholder="Buscar películas, horarios, promoción">
+      </label>
+
+      <nav class="tabs">
+        <a class="tab" data-page="index" href="Index.html">Cartelera</a>
+        <a class="tab" data-page="multicines" href="multicines.html">Multicines</a>
+        <a class="tab" data-page="promos" href="promos.html">Promociones</a>
+        <a class="tab" data-page="vip" href="vip.html">Tarjeta VIP</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn" id="navAuthBtn" href="auth.html">Iniciar Sesión</a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="page">
+
+    <section class="hero">
+      <div class="icon">💳</div>
+      <h1>Tarjeta VIP Premier</h1>
+      <p>Disfruta de beneficios exclusivos y descuentos especiales</p>
+    </section>
+
+    <section class="benefits">
+      <div class="banner">
+        <div class="col">
+          <h2>Beneficios VIP</h2>
+          <ul>
+            <li>💸 10% OFF en todas las entradas</li>
+            <li>⭐ Puntos x2 en cada compra</li>
+            <li>🍿 15% OFF en confitería</li>
+            <li>🚀 Acceso prioritario</li>
+          </ul>
+        </div>
+
+        <div class="col card">
+          <div id="vipCard" class="vip-card">
+            <div class="vip-head">
+              <span>Premier Assistant</span>
+              <small id="vipStatus">Cargando…</small>
+            </div>
+
+            <div class="vip-body">
+              <div class="row"><span>Miembro</span><strong id="vipTier">—</strong></div>
+              <div class="row"><span>Puntos</span><strong id="vipPoints">—</strong></div>
+              <div class="row"><span>Desde</span><strong id="vipSince">—</strong></div>
+            </div>
+
+            <div class="vip-actions">
+              <button id="btnVipChat" class="btn-outline">ChatBot</button>
+              <button id="btnJoin" class="btn">Unirme</button>
+              <button id="btnUsePoints" class="btn-outline">Usar puntos</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aquí se pintan los planes VIP (oculto de inicio) -->
+    <section id="plans" class="plans" style="display:none;"></section>
+
+  </main>
+
+  <!-- WIDGET ASSISTANT -->
+  <aside class="pa-widget" id="pa-widget" aria-live="polite">
+    <header class="pa-header">
+      <div class="pa-id">
+        <span class="pa-badge">🎬</span>
+        <div>
+          <strong>Premier Assistant</strong>
+          <div class="pa-sub"><span class="pa-dot"></span> En línea · IA Avanzada</div>
+        </div>
+      </div>
+      <button class="pa-min" id="pa-toggle">✕</button>
+    </header>
+
+    <div class="pa-tier">
+      <div class="pa-tier-left">🏷️ Miembro VIP</div>
+      <div class="pa-tier-right" id="pa-points-label">— puntos</div>
+    </div>
+
+    <div class="pa-progress">
+      <div class="pa-progress-bar" id="pa-progress"></div>
+    </div>
+
+    <div class="pa-chat" id="pa-chat">
+      <div class="pa-msg">
+        <div class="pa-msg-head"><span>🎥</span> <strong>Premier Assistant</strong></div>
+        <div class="pa-msg-body">
+          <p>¡Hola! 👋 Soy tu asistente personal de Premier Films.</p>
+          <ul class="pa-list">
+            <li>🧠 Recomendaciones personalizadas</li>
+            <li>🛒 Compra guiada</li>
+            <li>🪑 Selección inteligente de asientos</li>
+            <li>🧾 Gestión completa VIP</li>
+            <li>📍 Información de sedes y promos</li>
+          </ul>
+          <p id="pa-points-text" class="pa-muted"></p>
+        </div>
+      </div>
+
+      <div class="pa-quick">
+        <button class="pa-chip" data-action="recom">🎬 Recomendación inteligente</button>
+        <button class="pa-chip" data-action="reservas">📅 Ver mis próximas reservas</button>
+        <button class="pa-chip" data-action="estado">💳 Estado VIP</button>
+      </div>
+    </div>
+
+    <div class="pa-footer" id="pa-footer">16:45 <span>text</span></div>
+  </aside>
+
+  <script src="js/vip.js"></script>
+  <script src="js/nav-auth.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Promociones — Premier Films</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/promos.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+
+    <a class="brand" href="Index.html">
+      <span class="logo"></span>
+      <div>Premier Films<br><small>Cinema Experience</small></div>
+    </a>
+
+    <label class="search" aria-label="Buscar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M21 21l-3.9-3.9M10.8 18.6a7.8 7.8 0 1 1 0-15.6 7.8 7.8 0 0 1 0 15.6z" 
+              stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input id="q" type="search" placeholder="Buscar promos o términos…" />
+    </label>
+
+    <nav class="tabs">
+      <a class="tab" data-page="index" href="Index.html">Cartelera</a>
+      <a class="tab" data-page="multicines" href="multicines.html">Multicines</a>
+      <a class="tab" data-page="promos" href="promos.html">Promociones</a>
+      <a class="tab" data-page="vip" href="vip.html">Tarjeta VIP</a>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Aquí va el botón dinámico (login / perfil / cerrar sesión) -->
+      <a class="btn" id="navAuthBtn" href="auth.html">Iniciar Sesión</a>
+    </div>
+
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="panel">
+    <div>
+      <h1>Promociones activas</h1>
+      <p>Aprovecha descuentos y combos especiales esta semana.</p>
+    </div>
+    <div class="cta">
+      <a class="btn" href="Index.html">Ver Cartelera</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENIDO -->
+<main class="wrap">
+  <div class="filters">
+    <button class="filter active" data-scope="vigentes">Vigentes</button>
+    <button class="filter" data-scope="proximas">Próximas</button>
+    <button class="filter" data-scope="vencidas">Vencidas</button>
+    <div class="searchbar" style="margin-left:auto">
+      🔎 <input id="q2" type="search" placeholder="Buscar en promos…" />
+    </div>
+  </div>
+
+  <section id="grid" class="grid" aria-live="polite"></section>
+  <div id="empty" class="empty" style="display:none">No hay promociones para este filtro.</div>
+</main>
+
+<script>
+  /* ====== DATA ====== */
+  const PROMOS = [
+    { id:1, title:"Martes 2x1", badge:"-50%", cover:"img/posters/2x1-Entradas-cine.jpg",
+      desc:"Entra con tu +1 y paga solo 1 entrada en funciones 2D los martes.",
+      code:"MARTES2X1", scope:"vigentes", valid:"Válido hasta 2025-10-31", to:"index"
+    },
+    { id:2, title:"Combo Palomitas XL", badge:"Combo", cover:"img/posters/palomitas y gaseoa.jpg",
+      desc:"Palomitas XL + 2 bebidas medianas a precio especial presentando tu tarjeta VIP.",
+      code:"VIPCOMBO", scope:"vigentes", valid:"Válido hasta 2025-11-15", to:"vip"
+    },
+    { id:3, title:"Preventa Estreno IMAX", badge:"IMAX", cover:"img/posters/Preventa Estreno IMAX.jpeg",
+      desc:"Preventa con 15% OFF en funciones IMAX seleccionadas.",
+      code:"IMAXPRE", scope:"proximas", valid:"Desde 2025-11-01", to:"index"
+    },
+    { id:4, title:"Noche de Terror", badge:"Terror", cover:"img/posters/noche de terror.jpg",
+      desc:"Entradas a $12.000 para películas de terror después de las 9pm.",
+      code:"SCARE12K", scope:"vigentes", valid:"Hasta agotar existencias", to:"index"
+    },
+    { id:5, title:"Black Friday Cine", badge:"BF -30%", cover:"img/posters/Black Friday Cine.jpg",
+      desc:"30% OFF en todas las funciones 3D. Solo 24 horas.",
+      code:"BF3D30", scope:"vencidas", valid:"Expiró el 2024-11-29", to:"index"
+    }
+  ];
+
+  const $ = s => document.querySelector(s);
+  const grid = $('#grid'), empty = $('#empty');
+  const q = $('#q'), q2 = $('#q2');
+  const filters = document.querySelectorAll('.filter');
+
+  function card(p){
+    return `
+      <article class="card" data-scope="${p.scope}">
+        <div class="cover">
+          <img src="${p.cover}" alt="${p.title}">
+          <span class="badge">${p.badge}</span>
+        </div>
+        <div class="body">
+          <h3 class="title">${p.title} 
+            <span class="tag">${p.scope==='vigentes'?'Activa':
+                               p.scope==='proximas'?'Próxima':'Vencida'}
+            </span>
+          </h3>
+
+          <p class="desc">${p.desc}</p>
+          <div class="meta">📅 ${p.valid}</div>
+
+          <div class="codeRow">
+            <code class="code" id="code-${p.id}">${p.code}</code>
+            <button class="copy" data-code="code-${p.id}">Copiar</button>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" data-use="${p.id}">Usar</button>
+            <button class="btn-outline" data-more="${p.id}">Términos</button>
+          </div>
+
+          <details id="terms-${p.id}">
+            <summary>Ver términos y condiciones</summary>
+            <ul style="margin:8px 0 0 18px;">
+              <li>Aplican restricciones.</li>
+              <li>No acumulable.</li>
+              <li>Requiere documento o tarjeta VIP si aplica.</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+    `;
+  }
+
+  function render(list){
+    grid.innerHTML = list.map(card).join('');
+    empty.style.display = list.length ? 'none' : 'block';
+  }
+
+  function currentScope(){
+    const el = document.querySelector('.filter.active');
+    return el?.dataset.scope || 'vigentes';
+  }
+
+  function filterAndSearch(){
+    const scope = currentScope();
+    const term = ((q?.value || '') + ' ' + (q2?.value || '')).toLowerCase().trim();
+    const out = PROMOS.filter(p => {
+      const okScope = p.scope === scope;
+      const txt = [p.title,p.desc,p.valid,p.badge,p.code].join(' ').toLowerCase();
+      return okScope && (!term || txt.includes(term));
+    });
+    render(out);
+  }
+
+  filters.forEach(b => b.addEventListener('click', ()=>{
+    filters.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filterAndSearch();
+  }));
+
+  [q,q2].forEach(inp => inp && inp.addEventListener('input', filterAndSearch));
+
+  grid.addEventListener('click', (e)=>{
+    // Copiar código
+    const cpy = e.target.closest('.copy');
+    if(cpy){
+      const id = cpy.dataset.code;
+      const txt = document.getElementById(id)?.textContent || '';
+      navigator.clipboard?.writeText(txt);
+      cpy.textContent = 'Copiado ✓';
+      setTimeout(()=>cpy.textContent='Copiar',1200);
+      return;
+    }
+
+    // Términos
+    const more = e.target.closest('[data-more]');
+    if(more){
+      const id = more.dataset.more;
+      const det = document.getElementById('terms-'+id);
+      det.open = !det.open;
+      return;
+    }
+
+    // Usar promoción
+    const use = e.target.closest('[data-use]');
+    if(use){
+      const promo = PROMOS.find(p=>String(p.id)===use.dataset.use);
+      if(!promo) return;
+
+      let href = "Index.html";
+      if(promo.to === "vip") href = "vip.html";
+
+      location.href = href;
+    }
+  });
+
+  render(PROMOS.filter(p=>p.scope==='vigentes'));
+</script>
+
+<!-- SISTEMA DE SESIÓN -->
+<script src="js/nav-auth.js"></script>
+
+</body>
+</html>

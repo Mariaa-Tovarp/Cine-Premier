@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Selecciona tus asientos – Premier Films</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="css/Styles.css">
+
+  <!-- Estilos locales -->
+  <link rel="stylesheet" href="css/seat.css">
+</head>
+
+<body class="seat-page">
+
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+
+      <!-- Marca -->
+      <a class="brand" href="index.html">
+        <span class="logo"></span>
+        <div>
+          Premier Films<br>
+          <small>Cinema Experience</small>
+        </div>
+      </a>
+
+      <!-- Buscador -->
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 21l-3.9-3.9M10.8 18.6a7.8 7.8 0 1 1 0-15.6 7.8 7.8 0 0 1 0 15.6z"
+                stroke="#94a3b8" stroke-width="2" fill="none"/>
+        </svg>
+        <input type="search" placeholder="Buscar películas, horarios, promociones" />
+      </label>
+
+      <!-- Tabs -->
+      <nav class="tabs">
+        <a class="tab" href="index.html">Cartelera</a>
+        <a class="tab" href="multicines.html">Multicines</a>
+        <a class="tab" href="promos.html">Promociones</a>
+        <a class="tab" href="vip.html">Tarjeta VIP</a>
+      </nav>
+
+      <!-- Acciones -->
+      <div class="nav-actions">
+
+        <a class="icon-btn" href="favoritos.html" aria-label="Favoritos">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M20.8 4.6c-1.7-1.5-4.5-1.3-6 .6-1.5-1.9-4.3-2.1-6-.6-1.8 1.6-2.1 4.2-.8 6 2.2 3.6 6.8 6.5 6.8 6.5s4.6-2.9 6.8-6.5c1.3-1.8 1-4.4-.8-6Z"/></svg>
+        </a>
+
+        <a class="icon-btn" href="cart.html" aria-label="Carrito">
+          <svg class="ico" viewBox="0 0 24 24">
+            <circle cx="9" cy="19" r="1.6"/>
+            <circle cx="18" cy="19" r="1.6"/>
+            <path d="M5 6h16l-2 8H8L6 6Z"/>
+            <path d="M6 6 5 3H2"/>
+          </svg>
+        </a>
+
+        <!-- 🔥 BOTÓN AUTÉNTICO CON ID -->
+        <a class="btn" href="auth.html" id="navAuthBtn">Iniciar Sesión</a>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ENCABEZADO DE LA FUNCIÓN -->
+  <section class="show-head">
+    <div class="show-wrap">
+      <a class="back" href="javascript:history.back()">← Volver a la película</a>
+      <h1 id="movieTitle">—</h1>
+      <div class="meta-line" id="showMeta"></div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="page" role="main">
+    <div class="seat-layout">
+
+      <!-- Panel de asientos -->
+      <section class="seat-board">
+        <h2>Selecciona tus asientos</h2>
+
+        <!-- Selector de día / hora / formato / sala -->
+        <div class="fn-picker" style="margin: 8px 0 16px 0; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <label for="fnSelect" style="font-weight:600; font-size:0.9rem;">Función:</label>
+          <select id="fnSelect"
+                  style="padding:6px 8px; border-radius:8px; border:1px solid #cbd5f5; min-width:220px; font-size:0.9rem;">
+            <!-- seat.js llenará las opciones -->
+          </select>
+        </div>
+        <!-- fin selector -->
+
+        <div class="screen">PANTALLA</div>
+
+        <ul class="legend">
+          <li><span class="seat available"></span> Disponible</li>
+          <li><span class="seat selected"></span> Seleccionado</li>
+          <li><span class="seat occupied"></span> Ocupado</li>
+          <li><span class="seat premium"></span> Premium (+$5)</li>
+        </ul>
+
+        <div id="grid" class="grid"></div>
+      </section>
+
+      <!-- Resumen -->
+      <aside class="summary">
+        <h3>Resumen de Compra</h3>
+        <dl class="desc">
+          <dt>Película:</dt><dd id="sumMovie">—</dd>
+          <dt>Cine:</dt><dd id="sumCinema">—</dd>
+          <dt>Fecha:</dt><dd id="sumDate">—</dd>
+          <dt>Hora:</dt><dd id="sumTime">—</dd>
+          <dt>Formato:</dt><dd id="sumFormat">—</dd>
+        </dl>
+
+        <hr>
+
+        <!-- Campo de cupón -->
+        <div class="coupon-box" style="margin-bottom: 12px;">
+          <label for="coupon" style="display:block; font-size:0.9rem; margin-bottom:4px;">
+            Cupón de descuento (opcional)
+          </label>
+          <input
+            type="text"
+            id="coupon"
+            name="coupon"
+            placeholder="Ingresa tu código de cupón"
+            style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid #d4d4d8; font-size:0.9rem;"
+          >
+        </div>
+
+        <div class="total">
+          <span>Total:</span>
+          <strong id="sumTotal">$0.00</strong>
+        </div>
+
+        <button id="btnConfirm" class="btn-lg" disabled>🧾 Confirmar Compra</button>
+        <!-- Botón de VIP eliminado: el descuento VIP se aplica automáticamente en el backend -->
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/seat.js"></script>
+  <script src="js/nav-auth.js"></script>
+
+</body>
+</html>

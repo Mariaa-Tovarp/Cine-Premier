@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Premier Films — Inicia sesión</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="./index.html">
+        <span class="logo"></span>
+        <div>Premier Films<br><small>Cinema Experience</small></div>
+      </a>
+
+      <label class="search" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M21 21l-3.9-3.9M10.8 18.6a7.8 7.8 0 1 1 0-15.6 7.8 7.8 0 0 1 0 15.6z"
+                stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input type="search" placeholder="Buscar películas, horarios, promoción"/>
+      </label>
+
+      <nav class="tabs">
+        <a class="tab" href="./index.html">Cartelera</a>
+        <a class="tab" href="./multicines.html">Multicines</a>
+        <a class="tab" href="./promos.html">Promociones</a>
+        <a class="tab" href="./vip.html">Tarjeta VIP</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="icon-btn" href="favoritos.html" title="Favoritos" aria-label="Favoritos">
+          ♡
+        </a>
+        <a class="icon-btn" href="cart.html" title="Carrito" aria-label="Carrito">
+          🛒
+        </a>
+        <a class="btn" href="./auth.html">Iniciar Sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="auth-page">
+    <a class="back-link" href="./index.html">← Volver al inicio</a>
+
+    <section class="auth-card">
+      <div class="auth-head">
+        <div class="avatar">👤</div>
+        <h1>Premier Films</h1>
+        <p>Accede a tu cuenta o regístrate</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="switch">
+        <button class="switch-btn is-active" data-mode="login">Iniciar Sesión</button>
+        <button class="switch-btn" data-mode="register">Registrarse</button>
+      </div>
+
+      <!-- FORMULARIO LOGIN -->
+      <form id="formLogin" class="form is-active" autocomplete="on">
+        <label class="field">
+          <span class="ico">✉️</span>
+          <input type="email" name="email" placeholder="Correo electrónico" required>
+        </label>
+
+        <label class="field">
+          <span class="ico">🔒</span>
+          <input type="password" name="password" placeholder="Contraseña" required>
+          <button type="button" class="peek" aria-label="Mostrar contraseña">👁️</button>
+        </label>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" name="remember"> Recordarme</label>
+          <a class="link" href="#" id="forgotLink">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button class="btn-primary" type="submit">Iniciar Sesión</button>
+
+        <div class="vip-cta">
+          <div class="vip-ico">💳</div>
+          <div>
+            <b>¡Únete al Club VIP!</b>
+            <p>Descuentos exclusivos y beneficios especiales</p>
+          </div>
+          <a class="chip" href="./vip.html">Más información</a>
+        </div>
+      </form>
+
+      <!-- FORMULARIO REGISTRO -->
+      <form id="formRegister" class="form" autocomplete="on">
+        <label class="field">
+          <span class="ico">🙍‍♂️</span>
+          <input type="text" name="name" placeholder="Nombre completo" required>
+        </label>
+        <label class="field">
+          <span class="ico">✉️</span>
+          <input type="email" name="email" placeholder="Correo electrónico" required>
+        </label>
+        <label class="field">
+          <span class="ico">🔒</span>
+          <input type="password" name="password" placeholder="Contraseña (mín. 6)" minlength="6" required>
+          <button type="button" class="peek" aria-label="Mostrar contraseña">👁️</button>
+        </label>
+        <button class="btn-primary" type="submit">Crear cuenta</button>
+        <p class="note">Al registrarte aceptas los Términos y la Política de Privacidad.</p>
+      </form>
+    </section>
+  </main>
+
+  <!-- JS -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

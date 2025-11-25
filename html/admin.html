@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Premier Films — Dashboard Ejecutivo</title>
+
+  <link rel="stylesheet" href="css/Styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <span class="logo"></span>
+      <div>Premier Films<br><small>Sistema Administrativo</small></div>
+
+      <div style="flex:1"></div>
+
+      <div class="nav-actions">
+        <button id="btnLogout" class="btn-ghost">Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <main class="admin-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-side">
+      <div class="side-brand">
+        <div class="app-ico">🎬</div>
+        <div>
+          <b>Premier Films</b>
+          <small>Administración</small>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a class="item active" href="admin.html">Dashboard Ejecutivo</a>
+        <a class="item" href="admin-peliculas.html">Películas</a>
+        <a class="item" href="admin-funciones.html">Funciones y Horarios</a>
+        <a class="item" href="admin-usuarios.html">Usuarios del Sistema</a>
+      </nav>
+
+      <div class="side-foot">
+        <a class="item" id="logoutLink">↩ Cerrar Sesión</a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <section class="admin-main">
+
+      <div class="page-head">
+        <div>
+          <h1>Dashboard Ejecutivo</h1>
+          <p class="muted">Vista general y métricas en tiempo real</p>
+        </div>
+        <div id="adminUser" class="user-pill">Admin</div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <article class="panel kpi">
+          <div class="k-val" id="kpiRevenue">—</div>
+          <div class="k-lbl">Ingresos de Hoy</div>
+        </article>
+
+        <article class="panel kpi">
+          <div class="k-val" id="kpiTickets">—</div>
+          <div class="k-lbl">Boletos Vendidos</div>
+        </article>
+
+        <article class="panel kpi">
+          <div class="k-val" id="kpiVip">—</div>
+          <div class="k-lbl">Clientes VIP</div>
+        </article>
+      </div>
+
+      <section class="panel">
+        <h3 style="margin-bottom:10px">Estado del Sistema</h3>
+        <div class="status-bar">
+          <div>🟢 Base de Datos <small>Operativa</small></div>
+          <div>🟢 Pagos <small>Operando normal</small></div>
+          <div>🟢 API Interna <small>OK</small></div>
+          <div>🟢 Chat Bot <small>Disponible</small></div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="js/admin-kit.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
+
